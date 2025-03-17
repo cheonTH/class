@@ -1,0 +1,38 @@
+회원		주문		상품
+----------------------------------------------------------------
+ID(PK)		OLDER_ID	(PK)	PRODUCT_ID(PK)
+----------------------------------------------------------------
+PW		OLDER_DAY	PRODUCT
+NAME		ID(FK)		PRICE
+ADRESS		PRODUCT_ID(FK)	PRODUCT_COUNT
+EMAIL
+BIRTH
+
+
+
+
+회원	
+---------
+ID(PK)     VARCHAR2(100)
+---------
+PW	VARCHAR2(100)
+NAME	VARCHAR2(100)
+ADRESS	VARCHAR2(300)
+EMAIL	VARCHAR2(300)
+BIRTH	DATE
+
+주문	
+----------
+ORDER_ID	(PK)  NUMBER
+----------
+OLDER_DAY    DATE
+ID(FK)	      VARCHAR2(100) - 외래키이므로 회원테이블에 있는 조건과 비슷해야함
+PRODUCT_ID(FK)
+
+상품
+-----------
+PRODUCT_ID(PK)
+------------------
+PRODUCT
+PRICE
+PRODUCT_COUNT

@@ -1,0 +1,26 @@
+1. 요구사항 꽃 테이블과 화분테이블 2개가 필요, 꽃을 구매할 때 화분 테이블도 같이 구매
+-꽃은 꽃 이름, 색깔, 가격
+-화분은 제품번호, 화분색깔, 화분모양, 꽃 이름이 존재
+
+꽃(FLOWER)			화분(POT)
+----------------------------------------------------------------
+FLOWER_NAME(PK)			POT_ID(PK)
+FLOWER_COLOR			POT_COLOR
+FLOWER_PRICE			POT_SHAPE
+				FLOWER_NAME(FK)
+
+
+꽃(FLOWER)	
+---------------------
+FLOWER_NAME(PK)	 VARCHAR2(300)
+FLOWER_COLOR	VARCHAR2(200)
+FLOWER_PRICE	NUMBER
+		
+
+
+화분(POT)
+-----------------------
+POT_ID(PK)	NUMBER
+POT_COLOR	VARCHAR2(200)
+POT_SHAPE	VARCHAR2(300)
+FLOWER_NAME(FK)		VARCHAR2(300)
