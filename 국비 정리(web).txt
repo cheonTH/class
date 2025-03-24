@@ -369,3 +369,14 @@ js -> express
 java -> spring
 python -> django,flask
 c# -> .NET
+
+
+-forEach()
+let numbers = [1, 2, 3, 4, 5]
+기존
+for(let i = 0; i< nuumbers.leangth; i++){
+	console.log(numbers[i]
+}
+numbers.forEach((x) => console.log(x));
+
+게시판에 OR 상품 데이터를 나열할 때 사용
