@@ -1,0 +1,94 @@
+1. 다음 조건을 만족하는 테이블 스페이스를 생성하는 쿼리문을 작성하시오. 
+ 
+1) 테이블 스페이스 이름 : user_exam
+
+2) 데이터 파일 이름 : C:/Exam/user_exam.dbf
+
+3) 용량 : 10MB
+
+= CREATE TABLESPACE user_exam DATAFILE C:/Exam/user_exam.dbf SIZE 10M;
+
+2. 데이터베이스 사용자 계정 SCOTT의 비밀번호를 tiger123으로 변경하는 SQL 명령문을 작성하시오.
+ 
+
+3. 생성된 테이블 스페이스를 확인하기 위해서 테이블 스페이스의 목록을 조회할 수 있는 쿼리문을 작성하시오.
+- SELECT * FROM DBA_TABLESPACES;
+
+4. 다음의 제시한 내용을 보고 테이블을 만드는 명령문을 작성하시오.
+테이블 이름
+employees_demo
+
+ 각 속성이름 및 데이터형  
+employee_id NUMBER(6) (기본키)
+
+last_name VARCHAR2(25)
+
+phone_number VARCHAR2(20)
+
+hire_date DATE
+
+salary NUMBER(8,2)
+
+department_id NUMBER(4)
+
+= CREATE TABLE EMPLOYEES_DEMO (
+	employee_id NUMBER(6) PRIMARY KEY,
+	last_name VARCHAR2(25),
+	phone_number VARCHAR2(20),
+	hire_date DATE,
+	salary NUMBER(8,2),
+	department_id NUMBER(4)
+);
+
+5. 다음의 조건에 맞게 뷰(View)를 생성하는 명령문을 작성하시오.
+뷰 이름:clerk 
+조건: employees 테이블에서
+ job_id가 'PU_CLERK' 이거나 'SH_CLERK'인 자료 중 
+컬럼이 employee_id, last_name, department_id, job_id를 select하여 만든다.
+
+= CREATE VIEW CLERK AS (
+	SELECT EMPLOYEE_ID,
+		   LAST_NAME,
+		   DEPARTMENT_ID,
+		   JOB_ID
+	FROM EMPLOYEES
+	WHERE JOB_ID = 'PU_CLERK'
+);
+
+6. 이미 생성된 products 테이블에 다음 제약조건을 추가하시오.
+- price 컬럼에는 0보다 큰 값만 들어갈 수 있다.
+- stock 컬럼은 NULL을 허용하지 않도록 수정하시오.
+
+ALTER TABLE PRODUCT(
+	PRICE NUMBER CHECK(PRICE > 0)
+	STOCK VARCHAR2(100) NOT NULL
+);
+
+7. employees 테이블과 departments 테이블을 조인하여, 직원 이름과 소속 부서명을 조회하시오.
+- 테이블 구조 참고
+employees : emp_id, dept_id
+departments : dept_id, dept_name
+ 
+= SELECT E.EMP_ID, E.DEPT_ID, D.DEPT_ID, D.DEPT_NAME
+   FROM EMPLOYEES e INNER JOIN DEPARTMENTS d 
+   ON  E.DEPT_ID = D.DEPT_ID;
+
+8. 평균 급여보다 높은 급여를 받는 직원의 이름과 급여를 조회하시오.
+- 테이블 구조 참고
+employees: emp_id, salary
+
+= SELECT FIRST_NAME  , SALARY
+FROM EMPLOYEES
+WHERE SALARY > (SELECT AVG(SALARY)
+		FROM EMPLOYEES);
+ 
+9. employees 테이블에서 부서가 '개발팀'(DEPT_ ID: 10)인 직원들 중,
+전체 직원의 평균 급여보다 낮은 급여를 받는 직원들의 급여를 10% 인상하시오.
+ 
+
+
+10. employees 테이블에서 퇴사한 직원(퇴사일자가 존재하는 경우)의 정보를 삭제하시오.
+테이블 구조 참고
+employees(emp_id, name, hire_date, resign_date)
+= DELETE FROM EMPLOYEES
+WHERE RESIGN_DATE IS NOT NULL
