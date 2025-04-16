@@ -1,0 +1,23 @@
+프로젝트 구성요소
+package.json
+프로젝트의 메타 데이터
+사용할 node.js의 패키지 목록
+버전도 명시가 되어있음
+필요한 패키지가 있다면 package.json의 dependencies에 명시하고 npm install을 하면 node_modules에 설치됨
+
+package-lock.json
+어느 환경에서든 같은 버전의 패키지를 설치하기 위해 각 패키지가 사용할 버전을 고정해놓음
+보통 이 작업은 npm install 또는 create-react-app명령시 자동으로 실행됨
+
+Hook
+함수형 컴포넌트에서 상태와 생명주기를 사용할 수 있게 해주는 기능
+
+useState(): 상태를 관리하는 Hook의 일종
+메서드를 호출하고 상태변수와 상태변수의 값을 바꿀 수 있는 setter 하나를 돌려줌
+
+const[변수명, 함수명] = useState(초기값)
+
+변수(state)의 값이 변했을 때 새로고침을 안해도 바뀌는 이유
+ㄴ> 상태를 변경하는 setter함수를 호출하면 새로운 상태 값 또는 상태 업데이트 요청이 React의 상태 큐에 추가됨
+      React는 큐(줄(line))를 처리하여 상태 변경 요청을 실제상태에 반영함
+      이 과정에서 React는 비동기적으로 상태를 업데이트하므로 여러상태 변경이 있을 때 효율적으로 처리할 수 있음
