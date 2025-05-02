@@ -1,0 +1,5 @@
+리액트
+컴포넌트 만들기 useState, useEffect, fetch, context, 라우팅
+div에 style 직접주는 거 css파일 import해서 사용
+className={`navigation${theme}`}
+ㄴ>.navigation.theme
