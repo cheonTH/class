@@ -958,8 +958,13 @@ expo-image-picker
 - 아직 생성된 사용자가 없으므로 파이어베이스 콘솔에서 사용자를 추가하고 로그인 기능을 만들기
 
 getAuth() : 인증 서비스 객체를 만듬
-signInWithEmailAndPassword() : 이메일과 비밀번호로 로그인 시도를 하는 함수
+현재 firebase앱과 연결된 인증 객체를 가져오는 함수
+const auth = getAuth(app)
+이렇게 얻어온 객체를 통해 로그인, 회원가입, 로그아웃 등 인증 관련 기능을 수행할 수 있음
+    
+signInWithEmailAndPassword(auth, email, password) : 이메일과 비밀번호로 로그인 시도를 하는 함수
 Promise를 반환하고, 성공하면 userCredential 객체를, 실패하면 error를 반환함
+인자를 전달만 해주면 검증은 firebase가 알아서 해줌
 const credential = {
     user : {
 	uid : "사용자의 고유한 ID",
@@ -970,6 +975,8 @@ const credential = {
     }
 }
 
+createUserWithEmailAndPassword(auth, email, password) : 이메일과 비밀번호로 새 계정을 생성하는 함수
+인자로 이메일과 페스워드를 보내면 추가는 firebase가 알아서 해줌
 createUserWithEmailAndPassword()의 반환값
 {
     user : {
@@ -981,10 +988,51 @@ createUserWithEmailAndPassword()의 반환값
     }
 }
 
+updateProfile(업데이트할 대상 객체, 업데이트할 내용)
+
 firebase의 Storage에서 쓰기 권한은 로그인한 본인만 가능하도록 하고, 읽기 권한은 누구나 가능하도록
 보안 규칙을 수정
+
+Storage 관련 함수
+스토리지 :  firebase에서 제공하는 저장소
+getStorage(app) : firebase프로젝트의 Storage객체를 가져오는 함수
+ref(스토리지, 경로) : Storage내의  파일 위치를 참조하는 객체를 생성
+		 이 ref를 통해 파일 업로드/ 다운로드/ 삭제 등을 할 수 있음
+getDownloadURL() : 파일 다운로드 URL을 가져옴
 
 Spinner 컴포넌트
 로그인 또는 회원가입이 진행되는 동안 데이터를 수정하거나 버튼을 추가로 클릭하는 일이 발생하지 않도록 
 Spinner 컴포넌트를 만들어 사용자의 잘못된 입력이나 클릭을 방지하는 기능을 만들기
-    
+
+로그인 버튼을 눌렀을 때 inProgress의 상태를 변경하여 Spinner컴포넌트가 렌더링이 되도록 함
+로그인이 끝나면 Spinner가 종료되게 
+
+메인 화면
+대부분의 어플리케이션에서 사용자의 데이터 또는 서비스의 데이터를 이용하려면 데이터에 접근할 수 있는
+유효한 사용자라는 것을 증명해야함
+
+인증 후에는 서비스를 이용할 수 있는 화면이 렌더링 되고, 로그아웃 등으로 인증 상태를 해제하면 다시 인증을
+위한 화면으로 이동
+
+지금까지 만든 AuthStack 네비게이션에서 사용되는 화면들은 인증 이전에 사용되는, 인증을 위한 화면이 됨
+
+이제 인증 후 사용될 화면과 화면들을 관리하는 네비게이션 만들기
+
+네비게이션을 복합적으로 사용할 수 있음
+Screen에 화면으로 사용할 컴포넌트를 지정함
+네비게이션도 결국 컴포넌트이기 때문에 화면으로 사용할 수 있음
+
+인증과 화면 전환
+인증 상태에 따라 MainStack네비게이션과 AuthStack네비게이션을 렌더링
+- 어플리케이션이 시작되면 AuthStack네비게이션이 렌더링되야함
+- 로그인 또는 회원가입을 통해 인증에 성공하면 MainStack네비게이션이 렌더링되야 함
+- 로그아웃을 통해 인증상태가 사라지면 다시 AuthStack이 렌더링되야 함
+
+인증 상태 관리
+- 여러곳에서 상태를 변경해야 하는 경우 Spinner처럼 전역적으로 Context API를 이용하면 수월하게 관리할 수
+  있음
+
+로그인을 한 후, 회원가입을 한 후
+
+로그아웃
+- 로그아웃을 통해 인증 상태를 다시 해제하고 다시 AuthStack네비게이션이 렌더링되도록 만들기
